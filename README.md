@@ -1,91 +1,79 @@
 # Courseify
 
-Transform any Git repository into an interactive learning course powered by AI.
+Transform any codebase into an interactive learning course powered by AI.
 
 ## Concept
 
 **The Problem**: Codebases are hard to learn from. Even with good documentation, understanding how technologies, patterns, and decisions fit together requires deep exploration.
 
-**The Solution**: Courseify analyzes a git repository and generates a structured, beginner-friendly interactive course that teaches you the technologies, patterns, and engineering decisions by exploring real production code.
+**The Solution**: Courseify analyzes a codebase and generates a structured, beginner-friendly interactive course that teaches you the technologies, patterns, and engineering decisions by exploring real code.
 
 ## How It Works
 
-1. **Input**: User provides a git repository URL
-2. **Analysis**: AI agent explores the codebase structure, technologies, patterns, and architecture
-3. **Generation**: Creates progressive learning modules with:
+1. **Input**: Provide a codebase (GitHub URL, local repo, or code files)
+2. **Analysis**: Use the Courseify prompt framework with an AI (Claude, GPT-4, etc.) to explore the codebase structure, technologies, patterns, and architecture
+3. **Generation**: AI creates progressive learning modules with:
    - Concept explanations (beginner-friendly)
    - Real code walkthroughs (actual files + line numbers)
    - Hands-on exercises (with complete setup instructions)
    - Interactive exploration challenges
-4. **Output**: Beautiful course interface with sidebar navigation, markdown rendering, and progress tracking
-
-## Current Status
-
-### ✅ Completed (Proof of Concept)
-- [x] Course generation prompt framework (`prompts/codebase-course-prompt.md`)
-- [x] LoveNotes course specification (`prompts/generate-lovenotes-course.md`)
-- [x] First 3 modules generated for LoveNotes codebase
-  - Module 0: Getting Started (45 min)
-  - Module 1: Project Overview (60 min)
-  - Module 2: React Fundamentals (75 min)
-- [x] Interactive course viewer UI (`prototypes/courseify-lovenotes.html`)
-  - 3-screen flow (landing → generating → course)
-  - Collapsible module navigation
-  - Progress tracking
-  - Markdown rendering with syntax highlighting
-  - Responsive design
-
-### 🚧 Next Steps
-- [ ] Generate modules 3-5 for LoveNotes
-  - Module 3: Understanding Supabase Backend
-  - Module 4: The SMS Flow - Twilio Integration
-  - Module 5: Edge Functions - Serverless API
-- [ ] Connect UI to actual markdown files (currently mocked)
-- [ ] Build backend to handle git repo cloning + analysis
-- [ ] Real AI generation pipeline (Claude API integration)
-- [ ] Exercise validation/testing
-- [ ] Save user progress (localStorage or backend)
-
-### 💡 Future Ideas
-- Code playgrounds for exercises (embedded CodeSandbox)
-- Interactive quizzes and checkpoints
-- Community-contributed courses
-- Multi-language support
-- Video walkthroughs for complex concepts
-- Export to PDF/ebook formats
+4. **Output**: Load generated modules into the HTML course viewer for interactive learning
 
 ## Project Structure
 
 ```
-Projects/courseify/
-├── README.md                           # This file
+courseify/
+├── README.md                     # This file
 ├── prompts/
-│   ├── codebase-course-prompt.md      # Core framework for generating courses
-│   └── generate-lovenotes-course.md   # LoveNotes-specific generation prompt
+│   └── codebase-course-prompt.md # AI framework for generating courses
 ├── prototypes/
-│   ├── courseify-wireframe.html       # Initial wireframe design
-│   └── courseify-lovenotes.html       # Working prototype with LoveNotes content
+│   ├── courseify-wireframe.html  # Course viewer UI template
+│   └── courseify-demo.html       # Example with Courseify course loaded
 └── courses/
-    └── lovenotes/
-        ├── lovenotes-course-module-0.md  # Module 0: Getting Started
-        ├── lovenotes-course-module-1.md  # Module 1: Project Overview
-        └── lovenotes-course-module-2.md  # Module 2: React Fundamentals
+    └── courseify/                # Example: Course about Courseify itself
+        ├── courseify-module-0.md # Getting Started (30 min)
+        ├── courseify-module-1.md # The Prompt Framework (45 min)
+        └── courseify-module-2.md # Interactive Delivery (45 min)
 ```
 
-## Tech Stack
+## Quick Start
 
-### Current (Prototype)
-- **Frontend**: Vanilla HTML/CSS/JavaScript
-- **Markdown Rendering**: marked.js
-- **Course Generation**: Claude (AI agent with codebase access)
+### 1. Review the Prompt Framework
 
-### Planned (Production)
-- **Frontend**: React + TypeScript + Tailwind
-- **Backend**: Node.js + Express (or Deno/Bun)
-- **Database**: Supabase (courses, progress tracking)
-- **AI**: Claude API for course generation
-- **Git Operations**: simple-git or nodegit
-- **Deployment**: Vercel or Cloudflare Pages
+Open `prompts/codebase-course-prompt.md` to see how the AI is instructed to analyze codebases and generate courses.
+
+### 2. Generate Your First Module
+
+Use the prompt with Claude, GPT-4, or similar AI:
+
+```
+Using the Courseify framework in prompts/codebase-course-prompt.md,
+generate Module 0: Getting Started for [Your Project].
+
+Repository: [GitHub URL or codebase description]
+Target audience: Beginners learning [technology]
+```
+
+### 3. Load Into Course Viewer
+
+1. Open `prototypes/courseify-wireframe.html` in a text editor
+2. Find the `courseModules` array
+3. Paste your generated markdown content
+4. Open in browser to view
+
+## Example Course: Courseify Teaching Itself
+
+This repo includes a meta example - **Courseify generating a course about Courseify**!
+
+**What you learn:**
+- How the prompt framework works
+- Why certain instructions produce better courses
+- How to customize the viewer
+- How to deploy your own course
+
+**Location:** `courses/courseify/`
+
+**Try it:** Open `prototypes/courseify-demo.html` in your browser
 
 ## Design Principles
 
@@ -93,51 +81,82 @@ Projects/courseify/
 2. **Real Code Only**: All examples come from the actual codebase, not toy projects.
 3. **Progressive Disclosure**: Build concepts incrementally. Don't overwhelm.
 4. **Hands-On Learning**: Every module includes exercises with complete setup instructions.
-5. **Safe Environment**: Learners use git branches so they can't break anything.
-6. **Context Matters**: Explain WHY decisions were made, not just WHAT they are.
+5. **Context Matters**: Explain WHY decisions were made, not just WHAT they are.
+6. **No Build Step**: Pure HTML/CSS/JS - works anywhere
 
-## Example Course: LoveNotes
+## Tech Stack
 
-**Codebase**: [github.com/ckelimarks/ease-empathy-flow](https://github.com/ckelimarks/ease-empathy-flow)
+**Current (Prototype)**
+- **Frontend**: Vanilla HTML/CSS/JavaScript (single-file viewer)
+- **Markdown Rendering**: marked.js (via CDN)
+- **Course Generation**: Claude/GPT-4 with the Courseify prompt
+- **Content**: Markdown files
 
-**What you learn**:
-- Modern React patterns (hooks, context, TypeScript)
-- Supabase backend (database, auth, edge functions)
-- SMS integration (Twilio webhooks)
-- Payment processing (Stripe)
-- State machines for workflow management
-- Production considerations (error handling, security)
-
-**Target audience**: Beginner to intermediate developers
-
-**Estimated completion**: 6-8 hours across 5-8 modules
+**Why single-file HTML?**
+- Easy to share (just send the .html file)
+- Works offline (no dependencies)
+- No hosting required (open in browser)
+- Simple to customize (edit one file)
 
 ## Running the Prototype
 
-1. Open `prototypes/courseify-lovenotes.html` in a browser
-2. Click "Generate Interactive Course" to see the loading animation
-3. Explore the course interface with:
-   - Sidebar navigation (collapsible modules)
-   - Lesson content with syntax-highlighted code
-   - Previous/Next navigation
-   - Progress tracking
+1. Open `prototypes/courseify-demo.html` in a browser
+2. Navigate through the Courseify course using the sidebar
+3. See how generated modules are rendered
+4. Click Previous/Next to move through content
 
-**Note**: Content is currently embedded in the HTML. Production version would load from actual markdown files.
+## Creating Your Own Course
 
-## Course Generation Workflow
+### Step 1: Generate Modules
 
-1. **Read the framework**: `prompts/codebase-course-prompt.md`
-2. **Customize for repo**: Create a generation prompt (like `generate-lovenotes-course.md`)
-3. **Run AI agent**: Use Claude with file access to explore codebase and generate modules
-4. **Review and edit**: Modules are markdown files, easy to refine
-5. **Load into UI**: Courseify viewer renders the course
+Use an AI (Claude recommended) with the Courseify prompt to generate 3-5 modules for your codebase.
+
+**Prompt template:**
+```
+Using the framework in courseify/prompts/codebase-course-prompt.md:
+
+Codebase: [GitHub URL or description]
+Target audience: [Beginners/Intermediate/Advanced]
+Technologies: [React, Python, etc.]
+
+Generate Module 0: Getting Started
+
+Include:
+- What this project does
+- Why these technologies were chosen
+- How to set up locally
+- First steps for learners
+```
+
+### Step 2: Customize the Viewer
+
+1. Copy `prototypes/courseify-wireframe.html` to `my-course.html`
+2. Edit the `courseModules` array with your content
+3. Customize colors, fonts, and branding in the CSS
+4. Add your course title and description
+
+### Step 3: Deploy
+
+**Option 1: GitHub Pages**
+- Push to GitHub
+- Enable Pages in settings
+- Your course is live!
+
+**Option 2: Netlify Drop**
+- Go to app.netlify.com/drop
+- Drag your HTML file
+- Instant public URL
+
+**Option 3: Share Directly**
+- Email the HTML file
+- Works offline anywhere
 
 ## Vision
 
-Imagine a world where every open-source project could be learned interactively. Instead of:
+Imagine a world where every codebase could be learned interactively. Instead of:
 - Reading dry documentation
 - Guessing where to start
-- Getting lost in unfamiliar codebases
+- Getting lost in unfamiliar code
 
 You could:
 - Follow a structured learning path
@@ -147,20 +166,35 @@ You could:
 
 **Courseify makes codebases teachable.**
 
+## Use Cases
+
+- **Open source maintainers**: Help contributors understand your codebase
+- **Teachers/Bootcamps**: Turn real projects into courses
+- **Documentation**: Interactive alternative to static docs
+- **Onboarding**: Help new team members learn the system
+- **Personal learning**: Study any codebase systematically
+
 ## Contributing
 
-Currently a personal prototype. If this becomes public, contributions would be welcome for:
-- New course modules for existing repos
-- UI/UX improvements
-- Backend implementation
-- Additional codebase analysis features
+Ideas welcome! This is an early prototype exploring:
+- AI-assisted technical education
+- Codebase analysis and documentation
+- Interactive learning experiences
+
+Potential contributions:
+- New course examples for different tech stacks
+- UI/UX improvements to the viewer
+- Prompt framework enhancements
+- Additional features (search, bookmarks, notes)
 
 ## License
 
-TBD (currently private project)
+MIT - Free to use and modify
 
 ---
 
-**Created**: January 13, 2026
-**Status**: Proof of concept / Vibe-code prototype
-**Next Session**: Generate remaining LoveNotes modules, connect UI to real markdown files
+**Created**: January 13, 2026 during Prototype Hour
+**Status**: Working prototype with self-referential example course
+**Repository**: https://github.com/ckelimarks/courseify
+
+*Built with Claude Code*
